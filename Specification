@@ -1,0 +1,40 @@
+
+************************    LISTS ***********************************************************
+User should be able:
+
+-  create a new list
+-  name list
+-  rename list
+-  remove list
+-  save list 
+-  update list (list already exists  and is saved but a user edited the content of the list) 
+-  add a new ingridient to the list
+-  remove an ingridient from the list
+-  sort the list by date/ingridient/name?                      (should we have it?)
+-  sort the list content
+-  compare lists                                            (should we have it - ???????)
+-  tag the list as vegetable, holiday, work etc             (should we have it - ???????)
+-  find ingridient(s) in  all lists                         (should we have it - ???????)
+-  find list by date                                        (should we have it - ???????) 
+-  find list by name                                        (should we have it - ???????)
+************************    GUI   ***********************************************************
+
+User should find correspondent GUI element for:
+
+- show/hide list content
+- show all lists (names)
+- show/hide list(s)
+- create list
+- remove list
+- name list
+- rename list 
+- edit list
+- save list 
+- sort lists 
+- sort list's content 
+- close/open window with lists
+- drag items from one list to another -                     (should we have it - ???????)
+- tag the list -                                            (should we have it - ???????)
+- find in lists
+
+**********************  DB ********************************************************************

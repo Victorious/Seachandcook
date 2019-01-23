@@ -1,0 +1,24 @@
+
+Datum: 2019-01-23
+
+Närvarande: Martin, Viktor, Marcus
+Frånvarande: Katerina (semester)
+
+Programmet ska innehålla det katerina har skrivit, allt som är markerat med frågetecken i det dokumentet lägger vi som extra. Vi fokuserar på det som ej är frågetecken.
+Shopping listan hämtar informationen från databasen.
+
+Kolummer som bör vara med i GUI listan är:
+Typ av produkt, antal produkter och artikel nummer på varan.
+
+Kategorier kommer finnas men används endast i sorteringen och sökmotorn.
+
+Vi bestämde oss för att använda Swing eller JavaFX, Viktor får välja vilket.
+
+AP's:
+ 
+Katerina fortsätter med list klasserna.
+Viktor börjar med GUI.
+Martin börjar med Sorterings klasser.
+Marcus börjar med Databas connection och bygger upp tabell strukturen i databasen.
+
+Denna veckans mål är att få in lite klasser i git, så vi alla kan se att vi har börjat med något.
