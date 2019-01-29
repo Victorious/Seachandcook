@@ -7,6 +7,8 @@ import java.sql.Statement;
 public class DbUtil {
 //	Database connection varaibles
 	
+
+	
 	private static Statement statm;
 	private static ResultSet rs;
 	private static volatile Connection con = null;
@@ -14,7 +16,7 @@ public class DbUtil {
 	
 	public static Connection getDbConnection() {
 		 try {	 			
-				 con = DriverManager.getConnection(dbPath + dbName, user, pass);
+				 //con = DriverManager.getConnection(dbPath + dbName, user, pass);
 				 statm = con.createStatement();
 
 		 } catch (SQLException e) {
