@@ -1,11 +1,12 @@
-package seachandcook;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.sun.media.sound.ModelAbstractChannelMixer;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
@@ -20,6 +21,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -27,38 +29,36 @@ import java.awt.SystemColor;
 import java.awt.Label;
 import java.awt.TextField;
 import java.awt.List;
+import java.awt.Point;
+
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.swing.JScrollBar;
 import java.awt.Scrollbar;
 
 public class seachandcookGUI extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					seachandcookGUI frame = new seachandcookGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	Connection con = DbUtil.getDbConnection();
+	Statement statm;
+	ResultSet rs;
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public seachandcookGUI() {
+	public seachandcookGUI() throws SQLException {
 		setTitle("Seach and Cook!");
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,18 +75,6 @@ public class seachandcookGUI extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		Button searchButton = new Button("Search");
-		searchButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-			}
-		});
-		searchButton.setForeground(Color.WHITE);
-		searchButton.setBackground(new Color(241, 57, 83));
-		searchButton.setBounds(258, 10, 85, 22);
-		panel.add(searchButton);
-		
 		Label seachlabel = new Label("Enter product name :");
 		seachlabel.setFont(new Font("Dialog", Font.BOLD, 11));
 		seachlabel.setForeground(Color.WHITE);
@@ -97,19 +85,27 @@ public class seachandcookGUI extends JFrame {
 		searchtextField.setBounds(139, 10, 113, 22);
 		panel.add(searchtextField);
 		
-		JList leftList = new JList();
+		DefaultListModel leftModel = new DefaultListModel();
+		
+		JList leftList = new JList(leftModel);
 		leftList.setBounds(48, 60, 242, 283);
 		panel.add(leftList);
 		
-		Button addButton = new Button("Add");
-		addButton.setForeground(Color.WHITE);
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		addButton.setBackground(new Color(241, 57, 83));
-		addButton.setBounds(48, 366, 85, 22);
-		panel.add(addButton);
+		// Mysql testing start
+		statm = con.createStatement();
+		rs = statm.executeQuery("SELECT * FROM ingredients");
+		ArrayList<String> ingredientList = new ArrayList<String>();
+
+		while (rs.next()) {
+			String ingredient = rs.getString(3);
+			ingredientList.add(ingredient);
+		}
+		for (String string : ingredientList) {
+			System.out.println(string);
+			leftModel.addElement(string);
+		}
+		
+		// Mysql testing end
 		
 		Label productsLabel = new Label("Your shoppinglist");
 		productsLabel.setBounds(472, 30, 124, 22);
@@ -121,7 +117,8 @@ public class seachandcookGUI extends JFrame {
 		rightList.setBounds(412, 58, 219, 283);
 		contentPane.add(rightList);
 		
-		JLabel lblNewLabel = new JLabel("Total products :");
+		Integer totalProduct = null;
+		JLabel lblNewLabel = new JLabel("Total products : " + totalProduct);
 		lblNewLabel.setBounds(412, 445, 113, 14);
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblNewLabel.setForeground(Color.WHITE);
@@ -132,6 +129,25 @@ public class seachandcookGUI extends JFrame {
 		deleteButton.setBounds(412, 365, 80, 22);
 		contentPane.add(deleteButton);
 		deleteButton.setBackground(new Color(241, 57, 83));
+		deleteButton.addActionListener((e) -> {
+			//Testing deleting value from list
+			rightList.remove(rightList.getSelectedIndex());
+			//Test END
+		});
+		Button addButton = new Button("Add");
+		addButton.setForeground(Color.WHITE);
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			 // Testing adding values in list START
+				String selectedItem = leftList.getSelectedValue().toString();
+				rightList.add(selectedItem);
+			}
+			//  Testing END
+		});
+		
+		addButton.setBackground(new Color(241, 57, 83));
+		addButton.setBounds(48, 366, 85, 22);
+		panel.add(addButton);
 		
 		Button saveButton = new Button("Save");
 		saveButton.setForeground(Color.WHITE);
@@ -142,10 +158,25 @@ public class seachandcookGUI extends JFrame {
 		saveButton.setBackground(new Color(241, 57, 83));
 		saveButton.setBounds(412, 405, 80, 22);
 		contentPane.add(saveButton);
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
+		
+		Button searchButton = new Button("Search");
+		searchButton.addActionListener((e) -> {
+			// Search Testing Start
+			String searchText = searchtextField.getText();
+			
+			for (String string : ingredientList) {
+				if (string.equals(searchText)) {
+					leftList.setSelectedValue(string, true);
+				}
 			}
+			// Search Testing End
 		});
+		
+		searchButton.setForeground(Color.WHITE);
+		searchButton.setBackground(new Color(241, 57, 83));
+		searchButton.setBounds(258, 10, 85, 22);
+		panel.add(searchButton);
+		
+
 	}
 }

@@ -1,7 +1,7 @@
 
 public class TestList {
 
-	public static void main(String[] args) {
+	public TestList(){
 		// TODO Auto-generated method stub
 	ShoppingList list1 = new ShoppingList("LIST 1", "weekend", "t1");
 
