@@ -1,50 +1,22 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.sun.media.sound.ModelAbstractChannelMixer;
-
 import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
 import javax.swing.JList;
-import javax.swing.JFormattedTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JPasswordField;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
 import java.awt.Label;
 import java.awt.TextField;
 import java.awt.List;
-import java.awt.Point;
-
-import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
-import javax.swing.JTextPane;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import javax.swing.JScrollBar;
-import java.awt.Scrollbar;
 
 public class seachandcookGUI extends JFrame {
 
