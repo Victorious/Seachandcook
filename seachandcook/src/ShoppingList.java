@@ -1,9 +1,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Date;
 public class ShoppingList {
  
   private String Name;

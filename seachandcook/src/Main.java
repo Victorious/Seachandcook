@@ -1,8 +1,6 @@
 import java.awt.EventQueue;
 import java.sql.SQLException;
 
-import com.sun.corba.se.impl.ior.GenericTaggedComponent;
-
 public class Main {
 
 	/**
