@@ -4,8 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DbUtil {
-//	Database connection varaibles
+public class DbUtil {	
 	
 	private static Statement statm;
 	private static ResultSet rs;
@@ -13,8 +12,9 @@ public class DbUtil {
 
 	
 	public static Connection getDbConnection() {
+	
 		 try {	 			
-				 con = DriverManager.getConnection(dbPath + dbName, user, pass);
+				 con = DriverManager.getConnection(DbInfo.dbPath + DbInfo.dbName, DbInfo.user, DbInfo.pass);
 				 statm = con.createStatement();
 
 		 } catch (SQLException e) {
@@ -25,11 +25,15 @@ public class DbUtil {
 		
 	}
 	
-	public void getTable() throws SQLException {
+	public static void getIngredients() throws SQLException {
 		rs = statm.executeQuery("SELECT * FROM ingredients");
 		
 		while (rs.next()) {
 			System.out.println(rs.getString("ingredient"));
 		}
+	}
+	
+	public void getList() {
+	
 	}
 }
