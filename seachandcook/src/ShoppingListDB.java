@@ -41,7 +41,7 @@ public static void addNewShoppingList(ShoppingList list)
 }
 
 //rename list
-public static void renameList(ShoppingList list, String newListName)
+public static void renameList(ShoppingList list, String newListName, String id)
 {
 	String rename_list_querry=null;
 	System.out.println(list.getListId());
@@ -50,7 +50,7 @@ public static void renameList(ShoppingList list, String newListName)
 			  
 			    PreparedStatement insert_command = con.prepareStatement(rename_list_querry);
 				insert_command.setString(1, newListName);
-				insert_command.setString(2, list.getListId());
+				insert_command.setString(2, id);
 				insert_command.executeUpdate();
 				//insert_command.close();
 				//System.out.println(column_to_change);
@@ -59,7 +59,7 @@ public static void renameList(ShoppingList list, String newListName)
 		  }
 }
 //edit list comment
-public static void changeListComment(ShoppingList list, String newComment)
+public static void changeListComment(ShoppingList list, String newComment, String id)
 {
 	String edit_comment_querry=null;
 	System.out.println(list.getListId());
@@ -68,7 +68,7 @@ public static void changeListComment(ShoppingList list, String newComment)
 			  
 			    PreparedStatement insert_command = con.prepareStatement(edit_comment_querry);
 				insert_command.setString(1, newComment);
-				insert_command.setString(2, list.getListId());
+				insert_command.setString(2, id);
 				insert_command.executeUpdate();
 				//insert_command.close();
 				//System.out.println(column_to_change);
@@ -78,7 +78,7 @@ public static void changeListComment(ShoppingList list, String newComment)
 }
 
 //edit list tag
-public static void changeListTag(ShoppingList list, String newTag)
+public static void changeListTag(ShoppingList list, String newTag, String id)
 {
 	String edit_tag_querry=null;
 	System.out.println(list.getListId());
@@ -87,7 +87,7 @@ try {
 			  
 			    PreparedStatement insert_command = con.prepareStatement(edit_tag_querry);
 				insert_command.setString(1, newTag);
-				insert_command.setString(2, list.getListId());
+				insert_command.setString(2, id);
 				insert_command.executeUpdate();
 				//insert_command.close();
 				//System.out.println(column_to_change);
