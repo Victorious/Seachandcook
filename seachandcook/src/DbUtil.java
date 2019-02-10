@@ -14,8 +14,9 @@ public class DbUtil {
 	public static Connection getDbConnection() {
 	
 		 try {	 			
-				 con = DriverManager.getConnection(DbInfo.dbPath + DbInfo.dbName, DbInfo.user, DbInfo.pass);
-				 statm = con.createStatement();
+				 //con = DriverManager.getConnection(DbInfo.dbPath + DbInfo.dbName, DbInfo.user, DbInfo.pass);
+			 	   con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + "seachandcook", "root", "");
+			 				 statm = con.createStatement();
 
 		 } catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -25,13 +26,13 @@ public class DbUtil {
 		
 	}
 	
-	public static void getIngredients() throws SQLException {
-		rs = statm.executeQuery("SELECT * FROM ingredients");
-		
-		while (rs.next()) {
-			System.out.println(rs.getString("ingredient"));
-		}
-	}
+//	public static void getIngredients() throws SQLException {
+//		rs = statm.executeQuery("SELECT * FROM ingredients");
+//		
+//		while (rs.next()) {
+//			System.out.println(rs.getString("ingredient"));
+//		}
+//	}
 	
 	public void getList() {
 	

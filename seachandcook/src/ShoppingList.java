@@ -2,45 +2,55 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+import java.time.Instant;
 public class ShoppingList {
  
   private String Name;
   private String Comment;
   private String Tag;
-  private LocalDate Date;
+  private String Date;
+  private String Id;
   Map<String, Double> Items= new HashMap<String, Double>();
   private static ArrayList<ShoppingList> ListOfLists = new ArrayList<ShoppingList>();
 //create new shopping list
   public ShoppingList(String name, String com, String tags)
   { 
+	
     if (name.length() == 0)
     {
-    	name = "Untitled"+getUntitledNumber();
+    	name = "Untitled list";
     }
     setListName(name);
     setListComment(com);
     setListComment(tags);
     setListDate ();
+    setListId ();  
+    System.out.println(this);
+    
     addListToLists(this);  
   }
       
-  //if list is untitled, verify how many untitled list already exist
-  private String getUntitledNumber()
-  {
-	  return "1";
-  }
   
   private void setListDate ()
   {
-	  Date = LocalDate.now();
+	  Date = (LocalDate.now()).toString();
   }
   
+  private void setListId ()
+  {
+	  Id = String.valueOf(Instant.now().getEpochSecond());
+  }
   
-  public LocalDate getListDate()
+  public String getListDate()
   {
 	return Date;  
   }
   
+  public String getListId()
+  {
+	return Id;  
+  }
   
   public void setListName( String name)
   {

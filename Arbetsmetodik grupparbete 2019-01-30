@@ -1,0 +1,38 @@
+
+Datum: 2019-01-30
+
+Närvarande: Martin, Marcus, Katerina
+Frånvarande: Viktor (jobba över)
+
+
+Diskuterade om hur programmet ska få in och ta ut information från databasen som ska kunna visa sig i GUI't.
+
+Vi behöver lägga till några funktioner i GUI't som fortsätta med skapandet av våra klasser och databas information.
+
+
+AP's:
+
+Viktor fortsätta med GUI
+-------------------------
+-  lägga in en knapp för sortering (prata ihop med martin så ni är överens om hur sorteringen ska gå till)
+-  Lägga in objekt för att kunna skapa listor, t.ex att man kan namn ge en lista och spara in den i databasen.
+-  En meny(alt dropdown meny) för att kunna välja lista som man vill visa.
+-  Lägga in en antal kolumn i Shopping Listan(högra listan)
+
+-------------------------
+Martin fortsätter med sorterings klassen
+-------------------------
+-  produktlistan (vänster lista) kunna sortera på A-Ö, ö-A och produkt typ(t.ex grönsaker, kött)
+
+
+-------------------------
+Katerina fortsätter med list klassen
+-------------------------
+-  Kunna spara data i databasen via listklassen
+-  Kunna ta ut data från databasen via listklassen
+-  Kunna displaya list informationen för varje lista
+
+-------------------------
+Marcus börjar fortsätter med databasen
+-------------------------
+-  Lägga in värden i databasen
