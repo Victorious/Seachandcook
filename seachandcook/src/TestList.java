@@ -1,7 +1,8 @@
 
 public class TestList {
-
-	public TestList(){
+	ShoppingListDB s = new ShoppingListDB();
+	
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	ShoppingList list1 = new ShoppingList("LIST 1", "weekend", "t1");
 
@@ -24,10 +25,12 @@ public class TestList {
     System.out.println(list2.getListDate());
 
     System.out.println("\n");
-    list1.removeItemFromListByValue("potatos");
+    list1.removeItem("potatos");
     list1.getListItems();
-    ShoppingList.removeListFromLists(list2);
-   
+    System.out.println(list2.getListId());
+    ShoppingListDB.connectToDB();
+    ShoppingListDB.addNewShoppingList(list1);
+    ShoppingListDB.renameList(list2,"this is new name", "1549479695");
 	}
 
 }
