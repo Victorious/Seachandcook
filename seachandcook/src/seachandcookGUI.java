@@ -1,57 +1,46 @@
-//package seachandcook;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.JList;
-import javax.swing.JFormattedTextField;
-import javax.swing.JToggleButton;
-import javax.swing.ListModel;
-import javax.swing.JPasswordField;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Button;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Label;
 import java.awt.TextField;
-import java.awt.List;
-import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JScrollBar;
+
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
-import java.awt.Scrollbar;
+import sun.swing.MenuItemLayoutHelper;
 
-import java.util.*;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.SwingConstants;
+import javax.swing.JSeparator;
 
 public class seachandcookGUI extends JFrame {
 
-	
 	private JPanel contentPane;
 	private JTable tableLeft;
 	private JTable tableRight;
 	private JScrollPane jp;
 	private JTable leftTable;
 	private JTable rightTable;
+
+
 
 	/**
 	 * Launch the application.
@@ -77,6 +66,44 @@ public class seachandcookGUI extends JFrame {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 830, 571);
+		setLocationRelativeTo(null);
+		
+
+		JMenuBar topMenuBar = new JMenuBar();
+		setJMenuBar(topMenuBar);
+		
+		JMenu menuHelp = new JMenu("Help");
+		topMenuBar.add(menuHelp);
+		
+		JMenuItem menuItemHelpSorting = new JMenuItem("Sorting list");
+		menuHelp.add(menuItemHelpSorting);
+		menuItemHelpSorting.addActionListener(e -> {
+			JOptionPane.showMessageDialog(this, "Double click the title of the column you want to sort", "Sort the shoppinglist", JOptionPane.CLOSED_OPTION);
+		});
+		JMenuItem menuItemHelpAddList = new JMenuItem("Adding new list");
+		menuHelp.add(menuItemHelpAddList);
+		menuItemHelpAddList.addActionListener(e -> {
+			JOptionPane.showMessageDialog(this, "Press Shoppinglist menu and then 'Add Shoppinlist'. Type now your new list name and press add", "Add list", JOptionPane.CLOSED_OPTION);
+		});
+		JMenuItem MenuItemHelpSelectList = new JMenuItem("Selecting existing list");
+		menuHelp.add(MenuItemHelpSelectList);
+		MenuItemHelpSelectList.addActionListener(e -> {
+			JOptionPane.showMessageDialog(this, "Press Shoppinglist menu and then 'Select Shoppinglist'. Select your Shoppinglist", "Select list", JOptionPane.CLOSED_OPTION);
+		});
+		
+		JMenu menuShoppinglist = new JMenu("Shoppinglist");
+		topMenuBar.add(menuShoppinglist);
+		
+		JMenuItem menuItemSelectList = new JMenuItem("Select Shoppinglist");
+		menuShoppinglist.add(menuItemSelectList);
+		
+		JMenuItem menuItemAddList = new JMenuItem("Add Shoppinglist");
+		menuShoppinglist.add(menuItemAddList);
+		menuItemAddList.addActionListener(e -> {
+			SeachandcookAddListGUI addListGui = new SeachandcookAddListGUI();
+			addListGui.setVisible(true);
+		});
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -88,7 +115,7 @@ public class seachandcookGUI extends JFrame {
 		panel.setBackground(new Color(255, 255, 255));
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		Button searchButton = new Button("Search");
 		searchButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -101,6 +128,11 @@ public class seachandcookGUI extends JFrame {
 		searchButton.setBounds(295, 125, 85, 22);
 		panel.add(searchButton);
 		
+		searchButton.setForeground(Color.WHITE);
+		searchButton.setBackground(new Color(241, 57, 83));
+		searchButton.setBounds(295, 125, 85, 22);
+		panel.add(searchButton);
+
 		Label seachlabel = new Label("Enter product name :");
 		seachlabel.setBackground(new Color(255, 255, 255));
 		seachlabel.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -136,36 +168,21 @@ public class seachandcookGUI extends JFrame {
 		leftTable.setForeground(new Color(0, 0, 0));
 		scrollPaneLeft.setViewportView(leftTable);
 		
+		leftTable = new JTable();
+		leftTable.setBackground(new Color(255, 255, 255));
+		leftTable.setForeground(new Color(0, 0, 0));
+		scrollPaneLeft.setViewportView(leftTable);
+		
 		JLabel lblNewLabel_1 = new JLabel("");
-//		lblNewLabel_1.setIcon(new ImageIcon(seachandcookGUI.class.getResource("/seachandcook/Shoop.jpg")));
+		lblNewLabel_1.setIcon(new ImageIcon(seachandcookGUI.class.getResource("/Shoop.jpg")));
 		lblNewLabel_1.setBounds(176, 14, 149, 105);
 		panel.add(lblNewLabel_1);
-		
-		Label productsLabel = new Label("Your shoppinglist");
+
+		Label productsLabel = new Label("Your shoppinglist: ");
 		productsLabel.setBounds(577, 87, 138, 45);
 		productsLabel.setForeground(Color.WHITE);
 		productsLabel.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 15));
 		contentPane.add(productsLabel);
-		
-		Button sortButton = new Button("Sort A-Z");
-		sortButton.setForeground(Color.WHITE);
-		sortButton.setBackground(new Color(241, 57, 83));
-		sortButton.setBounds(412, 149, 80, 22);
-		contentPane.add(sortButton);
-		
-		Button unsortButton = new Button("Unsort");
-		unsortButton.setForeground(Color.WHITE);
-		unsortButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				//rightList.setVisible(true);                       OBS!!!
-				
-				
-			}
-		});
-		unsortButton.setBackground(Color.LIGHT_GRAY);
-		unsortButton.setBounds(412, 188, 80, 22);
-		contentPane.add(unsortButton);
 		
 		JLabel lblNewLabel = new JLabel("Total products: ");
 		lblNewLabel.setBounds(659, 494, 113, 14);
@@ -186,7 +203,6 @@ public class seachandcookGUI extends JFrame {
 				
 			}
 		});
-
 		Button saveButton = new Button("Save");
 		saveButton.setForeground(Color.WHITE);
 		saveButton.addActionListener(new ActionListener() {
@@ -203,6 +219,7 @@ public class seachandcookGUI extends JFrame {
 		
 		//RIGHT TABLE WITH COLUMNS
 		rightTable = new JTable();
+		rightTable.setAutoCreateRowSorter(true);
 		rightTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
