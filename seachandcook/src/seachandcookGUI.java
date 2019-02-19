@@ -1,7 +1,24 @@
+<<<<<<< HEAD
 import java.awt.Button;
 import java.awt.Color;
+=======
+import java.awt.BorderLayout;
+>>>>>>> master
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+<<<<<<< HEAD
+=======
+import javax.swing.JList;
+import javax.swing.JFormattedTextField;
+import javax.swing.JToggleButton;
+import javax.swing.ListModel;
+import javax.swing.JPasswordField;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+>>>>>>> master
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.TextField;
@@ -144,14 +161,41 @@ public class seachandcookGUI extends JFrame {
 		searchtextField.setBounds(176, 125, 113, 22);
 		panel.add(searchtextField);
 		
+<<<<<<< HEAD
+=======
+		List leftList = new List();
+		leftList.setBounds(48, 60, 242, 283);
+		panel.add(leftList);
+		
+		ArrayList<String> sortList = new ArrayList<String>();
+		
+								//Testprodukter
+		leftList.add("Gurka");
+		leftList.add("Tomat");
+		leftList.add("Pasta");
+		leftList.add("Köttbullar");
+		leftList.add("Grädde");
+
+		DefaultListModel rightModel = new DefaultListModel();
+		JList rightList = new JList(rightModel);
+		rightList.setBounds(412, 58, 219, 283);
+		contentPane.add(rightList);
+		
+
+>>>>>>> master
 		Button addButton = new Button("Add");
 		addButton.setForeground(Color.WHITE);
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+<<<<<<< HEAD
 				//rightList.add(leftList.getSelectedItem());
 				
 				//sortList.add(leftList.getSelectedItem());
+=======
+				rightModel.addElement(leftList.getSelectedItem());
+				sortList.add(leftList.getSelectedItem());
+>>>>>>> master
 				
 			}
 		});
@@ -163,16 +207,44 @@ public class seachandcookGUI extends JFrame {
 		scrollPaneLeft.setBounds(47, 156, 241, 331);
 		panel.add(scrollPaneLeft);
 		
+<<<<<<< HEAD
 		leftTable = new JTable();
 		leftTable.setBackground(new Color(255, 255, 255));
 		leftTable.setForeground(new Color(0, 0, 0));
 		scrollPaneLeft.setViewportView(leftTable);
+=======
+		Button sortButton = new Button("Sort A-Z");
+		sortButton.setForeground(Color.WHITE);
+		sortButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ListModel model = rightList.getModel();
+				String[] strings = new String[rightModel.size()];
+				for (int i = 0; i < strings.length; i++) {
+					strings[i] = model.getElementAt(i).toString();
+				}
+				Arrays.sort(strings);
+				rightList.setListData(strings);
+//				rightList.setVisible(false);
+				
+//				Collections.sort(rightList);
+//				JList<String> tempList = new JList<>(sortList.toArray(new String[0]));
+//				tempList.setBounds(412, 58, 219, 283);
+//				contentPane.add(tempList);
+				
+			}
+		});
+		sortButton.setBackground(new Color(241, 57, 83));
+		sortButton.setBounds(412, 345, 80, 22);
+		contentPane.add(sortButton);
+>>>>>>> master
 		
 		leftTable = new JTable();
 		leftTable.setBackground(new Color(255, 255, 255));
 		leftTable.setForeground(new Color(0, 0, 0));
 		scrollPaneLeft.setViewportView(leftTable);
 		
+<<<<<<< HEAD
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(seachandcookGUI.class.getResource("/Shoop.jpg")));
 		lblNewLabel_1.setBounds(176, 14, 149, 105);
@@ -183,6 +255,21 @@ public class seachandcookGUI extends JFrame {
 		productsLabel.setForeground(Color.WHITE);
 		productsLabel.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 15));
 		contentPane.add(productsLabel);
+=======
+		Button unsortButton = new Button("Unsort");
+		unsortButton.setForeground(Color.WHITE);
+		unsortButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				rightList.setVisible(true);
+			
+				
+			}
+		});
+		unsortButton.setBackground(Color.GREEN);
+		unsortButton.setBounds(412, 370, 80, 22);
+		contentPane.add(unsortButton);
+>>>>>>> master
 		
 		JLabel lblNewLabel = new JLabel("Total products: ");
 		lblNewLabel.setBounds(659, 494, 113, 14);

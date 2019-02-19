@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /DbInfo.java
 /.gitignore
 /DbUtil.class
@@ -28,3 +29,10 @@
 /Shoop.jpg
 /SeachAndCookAddListGUI.class
 /SeachandcookAddListGUI.class
+=======
+/seachandcookGUI$1.class
+/seachandcookGUI$2.class
+/Main$1.class
+/ShoppingList.sql
+/ShoppingListDB.class
+>>>>>>> master
