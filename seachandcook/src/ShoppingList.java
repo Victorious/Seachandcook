@@ -1,3 +1,15 @@
+//ShoppingList class can
+//-  create new list with help of constructor
+// - set and get list name
+// - set and get list date
+// - get list id(NB. list id cannot be modified, it is created when list is created and is unix name)
+// - set and get list Comment
+// - send and get list Tag (tag can be whatever, ex. "birthday", "mammas cakes" etc)
+//  addItemToList(String name, double num) - to add new ingredient to list, but may be we do not need it if we connect ingredients db and list db somehow
+//  getListItems() - return list's ingredients
+//  removeItem(String val) - remove item from list
+// addListToLists(ShoppingList list) add list to the list of lists we need this function if we will for ex. find all lists with some tag, ingredient etc.
+// removeListFromLists(ShoppingList list) remove list from list of lists
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,11 +39,9 @@ public class ShoppingList {
     setListDate ();
     setListId ();  
     System.out.println(this);
-    
-    addListToLists(this);  
+
   }
       
-  
   private void setListDate ()
   {
 	  Date = (LocalDate.now()).toString();
@@ -39,7 +49,7 @@ public class ShoppingList {
   
   private void setListId ()
   {
-	  Id = String.valueOf(Instant.now().getEpochSecond());
+	  Id = String.valueOf(System.currentTimeMillis());
   }
   
   public String getListDate()
@@ -81,12 +91,13 @@ public class ShoppingList {
   {
 	  return Tag;
   }
-  
+  // add new ingredient and quantity to list 
   public void addItemToList(String name, double num)
   {
 	  Items.put(name, num);
   }
   
+  //return list's ingredients
   public Map<String, Double> getListItems()
   {
 	  for (String e: Items.keySet())
@@ -95,18 +106,21 @@ public class ShoppingList {
 	  }
 	  return Items;
   }
-  
-  public void removeItemFromListByValue(String val)
+  //remove ingredient from list
+  public void removeItem(String val)
   {
     Items.remove(val);
   }  
-  
+  //add list to the list of lists
+  //we need this function if we will for ex. 
+  // find all lists with some tag, ingredient etc.
   private static void addListToLists(ShoppingList list)
   {
 	  ListOfLists.add(list);
 	  System.out.println(ListOfLists.size());
   }
   
+  // remove list from list of lists
   public static void removeListFromLists(ShoppingList list)
   {
 	  ListOfLists.remove(list);

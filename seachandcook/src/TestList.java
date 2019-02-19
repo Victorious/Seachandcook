@@ -1,7 +1,10 @@
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestList {
-
-	public TestList(){
+	ShoppingListDB s = new ShoppingListDB();
+	
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	ShoppingList list1 = new ShoppingList("LIST 1", "weekend", "t1");
 
@@ -22,12 +25,26 @@ public class TestList {
     list1.getListItems();
     System.out.println(list1.getListDate());
     System.out.println(list2.getListDate());
-
-    System.out.println("\n");
-    list1.removeItemFromListByValue("potatos");
     list1.getListItems();
-    ShoppingList.removeListFromLists(list2);
-   
+    System.out.println("\n");
+    list1.removeItem("potatos");
+    list1.getListItems();
+    System.out.println(list2.getListId());
+    ShoppingListDB.connectToDB();
+    ShoppingListDB.addNewShoppingList(list1);
+    Map<String, Double> Items= new HashMap<String, Double>();
+    Items.put("potato", 2.0);
+    Items.put("apple", 1.5);
+    Items.put("tomato", 3.5);
+    Items.put("potato", 5.0);
+    Items.put("cucumber", 4.0);
+    ShoppingListDB.addItem(list1, Items);
+    ShoppingListDB.addItem(list1, Items);
+    ShoppingListDB.addItem(list2, Items);
+    ShoppingListDB.getListOfAllItems();
+    ShoppingListDB.getListItems(list1);
+    ShoppingListDB.deleteListItem(list1, "potato");
+    //ShoppingListDB.renameList(list2,"this is new name", "1549479695");
 	}
 
 }
