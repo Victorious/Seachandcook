@@ -1,33 +1,12 @@
-<<<<<<< HEAD
 import java.awt.Button;
 import java.awt.Color;
-=======
-import java.awt.BorderLayout;
->>>>>>> master
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-<<<<<<< HEAD
-=======
-import javax.swing.JList;
-import javax.swing.JFormattedTextField;
-import javax.swing.JToggleButton;
-import javax.swing.ListModel;
-import javax.swing.JPasswordField;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
->>>>>>> master
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,17 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import sun.swing.MenuItemLayoutHelper;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
 
 public class seachandcookGUI extends JFrame {
 
@@ -85,10 +57,11 @@ public class seachandcookGUI extends JFrame {
 		setBounds(100, 100, 830, 571);
 		setLocationRelativeTo(null);
 		
-
+		// Adding top menubar
 		JMenuBar topMenuBar = new JMenuBar();
 		setJMenuBar(topMenuBar);
 		
+		// Creating menubar items and adding actionlistners
 		JMenu menuHelp = new JMenu("Help");
 		topMenuBar.add(menuHelp);
 		
@@ -144,11 +117,6 @@ public class seachandcookGUI extends JFrame {
 		searchButton.setBackground(new Color(241, 57, 83));
 		searchButton.setBounds(295, 125, 85, 22);
 		panel.add(searchButton);
-		
-		searchButton.setForeground(Color.WHITE);
-		searchButton.setBackground(new Color(241, 57, 83));
-		searchButton.setBounds(295, 125, 85, 22);
-		panel.add(searchButton);
 
 		Label seachlabel = new Label("Enter product name :");
 		seachlabel.setBackground(new Color(255, 255, 255));
@@ -160,44 +128,11 @@ public class seachandcookGUI extends JFrame {
 		TextField searchtextField = new TextField();
 		searchtextField.setBounds(176, 125, 113, 22);
 		panel.add(searchtextField);
-		
-<<<<<<< HEAD
-=======
-		List leftList = new List();
-		leftList.setBounds(48, 60, 242, 283);
-		panel.add(leftList);
-		
-		ArrayList<String> sortList = new ArrayList<String>();
-		
-								//Testprodukter
-		leftList.add("Gurka");
-		leftList.add("Tomat");
-		leftList.add("Pasta");
-		leftList.add("Köttbullar");
-		leftList.add("Grädde");
 
-		DefaultListModel rightModel = new DefaultListModel();
-		JList rightList = new JList(rightModel);
-		rightList.setBounds(412, 58, 219, 283);
-		contentPane.add(rightList);
-		
-
->>>>>>> master
 		Button addButton = new Button("Add");
 		addButton.setForeground(Color.WHITE);
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-<<<<<<< HEAD
-				//rightList.add(leftList.getSelectedItem());
-				
-				//sortList.add(leftList.getSelectedItem());
-=======
-				rightModel.addElement(leftList.getSelectedItem());
-				sortList.add(leftList.getSelectedItem());
->>>>>>> master
-				
-			}
+		addButton.addActionListener(e -> {
+
 		});
 		addButton.setBackground(new Color(241, 57, 83));
 		addButton.setBounds(295, 465, 85, 22);
@@ -207,44 +142,17 @@ public class seachandcookGUI extends JFrame {
 		scrollPaneLeft.setBounds(47, 156, 241, 331);
 		panel.add(scrollPaneLeft);
 		
-<<<<<<< HEAD
+
 		leftTable = new JTable();
 		leftTable.setBackground(new Color(255, 255, 255));
 		leftTable.setForeground(new Color(0, 0, 0));
 		scrollPaneLeft.setViewportView(leftTable);
-=======
-		Button sortButton = new Button("Sort A-Z");
-		sortButton.setForeground(Color.WHITE);
-		sortButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				ListModel model = rightList.getModel();
-				String[] strings = new String[rightModel.size()];
-				for (int i = 0; i < strings.length; i++) {
-					strings[i] = model.getElementAt(i).toString();
-				}
-				Arrays.sort(strings);
-				rightList.setListData(strings);
-//				rightList.setVisible(false);
-				
-//				Collections.sort(rightList);
-//				JList<String> tempList = new JList<>(sortList.toArray(new String[0]));
-//				tempList.setBounds(412, 58, 219, 283);
-//				contentPane.add(tempList);
-				
-			}
-		});
-		sortButton.setBackground(new Color(241, 57, 83));
-		sortButton.setBounds(412, 345, 80, 22);
-		contentPane.add(sortButton);
->>>>>>> master
-		
+
 		leftTable = new JTable();
 		leftTable.setBackground(new Color(255, 255, 255));
 		leftTable.setForeground(new Color(0, 0, 0));
 		scrollPaneLeft.setViewportView(leftTable);
-		
-<<<<<<< HEAD
+
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(seachandcookGUI.class.getResource("/Shoop.jpg")));
 		lblNewLabel_1.setBounds(176, 14, 149, 105);
@@ -255,22 +163,7 @@ public class seachandcookGUI extends JFrame {
 		productsLabel.setForeground(Color.WHITE);
 		productsLabel.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 15));
 		contentPane.add(productsLabel);
-=======
-		Button unsortButton = new Button("Unsort");
-		unsortButton.setForeground(Color.WHITE);
-		unsortButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				rightList.setVisible(true);
-			
-				
-			}
-		});
-		unsortButton.setBackground(Color.GREEN);
-		unsortButton.setBounds(412, 370, 80, 22);
-		contentPane.add(unsortButton);
->>>>>>> master
-		
+
 		JLabel lblNewLabel = new JLabel("Total products: ");
 		lblNewLabel.setBounds(659, 494, 113, 14);
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 13));
@@ -282,19 +175,13 @@ public class seachandcookGUI extends JFrame {
 		deleteButton.setBounds(412, 226, 80, 22);
 		contentPane.add(deleteButton);
 		deleteButton.setBackground(new Color(241, 57, 83));
-		deleteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				//rightList.remove(rightList.getSelectedItem());  OBS!!!
-				//sortList.remove(rightList.getSelectedItem());  OBS!!!
-				
-			}
+		deleteButton.addActionListener(e -> {
+
 		});
 		Button saveButton = new Button("Save");
 		saveButton.setForeground(Color.WHITE);
-		saveButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
+		saveButton.addActionListener(e -> {
+	
 		});
 		saveButton.setBackground(new Color(241, 57, 83));
 		saveButton.setBounds(412, 264, 80, 22);
