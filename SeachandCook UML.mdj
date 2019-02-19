@@ -2373,12 +2373,12 @@
 							"showShadow": true,
 							"containerChangeable": false,
 							"containerExtending": false,
-							"left": 680,
+							"left": 688,
 							"top": 696,
 							"width": 449,
 							"height": 114,
 							"autoResize": false,
-							"text": "List_ingredients: list_id will be depended on Shopping_list: list_id and List_ingredients: ingredient_id will be depended on Ingredients: d\n\n\nRecipe_ingredients: recipe_id will be depended on Recipe: recipe_id and Recipe_ingredients: ingredient_id will be depended on Ingredients: id",
+							"text": "List_ingredients: list_id will be depended on Shopping_list: list_id and List_ingredients: ingredient_id will be depended on Ingredients: id\n\n\nRecipe_ingredients: recipe_id will be depended on Recipe: recipe_id and Recipe_ingredients: ingredient_id will be depended on Ingredients: id",
 							"wordWrap": true
 						}
 					]

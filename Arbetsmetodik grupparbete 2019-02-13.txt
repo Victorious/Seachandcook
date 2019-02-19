@@ -1,0 +1,15 @@
+
+Datum: 2019-02-13
+
+Närvarande: Martin, Marcus, Katerina, Viktor
+Frånvarande:
+
+Kom överrens om att försöka pusha upp en ny version senast på söndag.
+
+AP's
+ändra Jlist till Jtable - Viktor
+
+Lägga till ingredienser i listan och läsa från databasen - Katerina
+
+Marcus och Martin standby och hjälper till där det behövs.
+
