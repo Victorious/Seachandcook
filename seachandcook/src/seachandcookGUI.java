@@ -1,5 +1,3 @@
-//package seachandcook;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -12,6 +10,7 @@ import java.awt.FlowLayout;
 import javax.swing.JList;
 import javax.swing.JFormattedTextField;
 import javax.swing.JToggleButton;
+import javax.swing.ListModel;
 import javax.swing.JPasswordField;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -113,8 +112,8 @@ public class seachandcookGUI extends JFrame {
 		leftList.add("Köttbullar");
 		leftList.add("Grädde");
 
-		
-		List rightList = new List();
+		DefaultListModel rightModel = new DefaultListModel();
+		JList rightList = new JList(rightModel);
 		rightList.setBounds(412, 58, 219, 283);
 		contentPane.add(rightList);
 		
@@ -124,7 +123,7 @@ public class seachandcookGUI extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				rightList.add(leftList.getSelectedItem());
+				rightModel.addElement(leftList.getSelectedItem());
 				sortList.add(leftList.getSelectedItem());
 				
 			}
@@ -145,12 +144,19 @@ public class seachandcookGUI extends JFrame {
 		sortButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				rightList.setVisible(false);
+				ListModel model = rightList.getModel();
+				String[] strings = new String[rightModel.size()];
+				for (int i = 0; i < strings.length; i++) {
+					strings[i] = model.getElementAt(i).toString();
+				}
+				Arrays.sort(strings);
+				rightList.setListData(strings);
+//				rightList.setVisible(false);
 				
-				Collections.sort(sortList);
-				JList<String> tempList = new JList<>(sortList.toArray(new String[0]));
-				tempList.setBounds(412, 58, 219, 283);
-				contentPane.add(tempList);
+//				Collections.sort(rightList);
+//				JList<String> tempList = new JList<>(sortList.toArray(new String[0]));
+//				tempList.setBounds(412, 58, 219, 283);
+//				contentPane.add(tempList);
 				
 			}
 		});
@@ -165,6 +171,7 @@ public class seachandcookGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				rightList.setVisible(true);
+			
 				
 			}
 		});
