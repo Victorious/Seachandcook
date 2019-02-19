@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestList {
 	ShoppingListDB s = new ShoppingListDB();
@@ -23,14 +25,26 @@ public class TestList {
     list1.getListItems();
     System.out.println(list1.getListDate());
     System.out.println(list2.getListDate());
-
+    list1.getListItems();
     System.out.println("\n");
     list1.removeItem("potatos");
     list1.getListItems();
     System.out.println(list2.getListId());
     ShoppingListDB.connectToDB();
     ShoppingListDB.addNewShoppingList(list1);
-    ShoppingListDB.renameList(list2,"this is new name", "1549479695");
+    Map<String, Double> Items= new HashMap<String, Double>();
+    Items.put("potato", 2.0);
+    Items.put("apple", 1.5);
+    Items.put("tomato", 3.5);
+    Items.put("potato", 5.0);
+    Items.put("cucumber", 4.0);
+    ShoppingListDB.addItem(list1, Items);
+    ShoppingListDB.addItem(list1, Items);
+    ShoppingListDB.addItem(list2, Items);
+    ShoppingListDB.getListOfAllItems();
+    ShoppingListDB.getListItems(list1);
+    ShoppingListDB.deleteListItem(list1, "potato");
+    //ShoppingListDB.renameList(list2,"this is new name", "1549479695");
 	}
 
 }

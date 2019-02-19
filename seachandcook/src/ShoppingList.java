@@ -50,7 +50,7 @@ public class ShoppingList {
   
   private void setListId ()
   {
-	  Id = String.valueOf(Instant.now().getEpochSecond());
+	  Id = String.valueOf(System.currentTimeMillis());
   }
   
   public String getListDate()
@@ -92,7 +92,7 @@ public class ShoppingList {
   {
 	  return Tag;
   }
-  // add new ingredient to list and quantity
+  // add new ingredient and quantity to list 
   public void addItemToList(String name, double num)
   {
 	  Items.put(name, num);
