@@ -14,6 +14,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class MainView extends JFrame{
 	public JTable table;
@@ -31,7 +32,7 @@ public class MainView extends JFrame{
 		setTitle("Seach and Cook DB!");
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 929, 523);
+		setBounds(100, 100, 929, 623);
 		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -130,12 +131,16 @@ public class MainView extends JFrame{
 
 	public void addProducts() throws SQLException {
 		int productType = 0;
-		if (comboBoxAddProduct.getSelectedItem().equals("Grönsak")) {
+		if (comboBoxAddProduct.getSelectedItem().equals("Frukt&Grönt")) {
 			productType = 1;
 		} else if (comboBoxAddProduct.getSelectedItem().equals("Mejeri")) {
 			productType = 2;
 		} else if (comboBoxAddProduct.getSelectedItem().equals("Hushåll")) {
 			productType = 3;
+		} else if (comboBoxAddProduct.getSelectedItem().equals("Kött")) {
+			productType = 4;
+		} else if (comboBoxAddProduct.getSelectedItem().equals("Fisk")) {
+			productType = 5;
 		} else {
 			System.out.println("error");
 		}
