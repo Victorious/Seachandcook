@@ -2,16 +2,26 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
 public class SeachandcookAddListGUI extends JFrame{
 	private JTextField textFieldListName;
-	
-	public SeachandcookAddListGUI() {
+	Statement statm;
+	Connection con;
+	public SeachandcookAddListGUI() throws SQLException {
+		con = DbUtil.getDbConnection();
+		statm = con.createStatement();
+		
 		getContentPane().setLayout(null);
 		setTitle("Add new list");
 		setBounds(100, 100, 400, 240);
@@ -20,6 +30,7 @@ public class SeachandcookAddListGUI extends JFrame{
 		getContentPane().add(panel);
 		panel.setLayout(null);
 				
+
 						
 		textFieldListName = new JTextField();
 		textFieldListName.setBounds(120, 69, 146, 26);
@@ -38,8 +49,19 @@ public class SeachandcookAddListGUI extends JFrame{
 		btnAddList.setBounds(120, 122, 87, 29);
 		getContentPane().add(btnAddList);
 		btnAddList.addActionListener(e -> {
-			System.out.println("list added");
+			try {
+				InsertList();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			setVisible(false);
 		});
 	}
+	
+	public void InsertList() throws SQLException {
+		String insertList = "INSERT INTO shopping_list (title) VALUES ('" + textFieldListName.getText() + "')";
+		statm.executeUpdate(insertList);
+	}
+
 }

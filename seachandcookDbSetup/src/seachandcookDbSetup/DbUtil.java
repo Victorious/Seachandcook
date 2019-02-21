@@ -8,8 +8,6 @@ import java.sql.Statement;
 
 public class DbUtil {
 
-	private static Statement statm;
-	private static ResultSet rs;
 	private static volatile Connection con = null;
 
 	
@@ -17,7 +15,7 @@ public class DbUtil {
 	
 		 try {	 			
 				   con = DriverManager.getConnection(DbInfo.dbPath + DbInfo.dbName, DbInfo.user, DbInfo.pass);
-			 				 statm = con.createStatement();
+			 				 
 
 		 } catch (SQLException e) {
 				// TODO Auto-generated catch block

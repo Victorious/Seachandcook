@@ -3,9 +3,16 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.Menu;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -15,21 +22,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.sun.corba.se.pept.transport.ListenerThread;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-public class seachandcookGUI extends JFrame {
+@SuppressWarnings("serial")
+public class seachandcookGUI extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private JTable tableLeft;
-	private JTable tableRight;
-	private JScrollPane jp;
 	private JTable leftTable;
 	private JTable rightTable;
-
-
+	Label productsLabel;
+	JMenuItem menuItemNew = null;
+	JMenu menuSelectList = null;
+	
+	ResultSet rs;
+	Connection con;
+	Statement statm;
 
 	/**
 	 * Launch the application.
@@ -49,13 +62,19 @@ public class seachandcookGUI extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public seachandcookGUI() {
+	public seachandcookGUI() throws SQLException {
+		
 		setTitle("Seach and Cook!");
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 830, 571);
 		setLocationRelativeTo(null);
+		
+		// Getting database connection
+		con = DbUtil.getDbConnection();
+		statm = con.createStatement();
 		
 		// Adding top menubar
 		JMenuBar topMenuBar = new JMenuBar();
@@ -83,15 +102,28 @@ public class seachandcookGUI extends JFrame {
 		
 		JMenu menuShoppinglist = new JMenu("Shoppinglist");
 		topMenuBar.add(menuShoppinglist);
-		
-		JMenuItem menuItemSelectList = new JMenuItem("Select Shoppinglist");
-		menuShoppinglist.add(menuItemSelectList);
+		menuSelectList = new JMenu("Select Shoppinglist");
+		menuShoppinglist.add(menuSelectList);
+
+		String selectLists = "SELECT * FROM shopping_list";
+		rs = statm.executeQuery(selectLists);
+		while (rs.next()) {
+			
+			menuItemNew = new JMenuItem(rs.getString("title"));
+			menuSelectList.add(menuItemNew);
+			menuItemNew.addActionListener(this);
+		}
 		
 		JMenuItem menuItemAddList = new JMenuItem("Add Shoppinglist");
 		menuShoppinglist.add(menuItemAddList);
 		menuItemAddList.addActionListener(e -> {
-			SeachandcookAddListGUI addListGui = new SeachandcookAddListGUI();
-			addListGui.setVisible(true);
+			try {
+				SeachandcookAddListGUI addListGui = new SeachandcookAddListGUI();
+				addListGui.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		
 		contentPane = new JPanel();
@@ -158,8 +190,8 @@ public class seachandcookGUI extends JFrame {
 		lblNewLabel_1.setBounds(176, 14, 149, 105);
 		panel.add(lblNewLabel_1);
 
-		Label productsLabel = new Label("Your shoppinglist: ");
-		productsLabel.setBounds(577, 87, 138, 45);
+		productsLabel = new Label("Your shoppinglist: ");
+		productsLabel.setBounds(514, 87, 284, 45);
 		productsLabel.setForeground(Color.WHITE);
 		productsLabel.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 15));
 		contentPane.add(productsLabel);
@@ -202,6 +234,34 @@ public class seachandcookGUI extends JFrame {
 			}
 		));
 		scrollPaneRight.setViewportView(rightTable);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String listString = e.getActionCommand();
+		productsLabel.setText("Your shoppinglist: " + listString);
+		String sqlString = "SELECT shopping_list.id, title, ingredients.id, ingredients.ingredient "
+				+ "FROM shopping_list, list_ingredient, ingredients "
+				+ "WHERE title = '"+listString+"' "
+				+ "AND shopping_list.id = list_ingredient.list_id "
+				+ "AND list_ingredient.ingredient_id = ingredients.id ";
+		try {
+			rs = statm.executeQuery(sqlString);
+			 
+			while (rs.next()) {
+				int numcols = rightTable.getModel().getColumnCount();
+				Object [] fill = new Object[numcols];
+				int product_quantity = rs.getInt("list_ingredient.quantity");
+				String product_item = rs.getString("ingredients.ingredient");
+				fill[0] = product_item;
+				fill[1] = product_quantity;
+				((DefaultTableModel)rightTable.getModel()).addRow(fill);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 	}
 }

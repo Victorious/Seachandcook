@@ -7,15 +7,13 @@ import java.sql.Statement;
 public class DbUtil {	
 	
 	private static Statement statm;
-	private static ResultSet rs;
 	private static volatile Connection con = null;
 
 	
 	public static Connection getDbConnection() {
 	
 		 try {	 			
-				 //con = DriverManager.getConnection(DbInfo.dbPath + DbInfo.dbName, DbInfo.user, DbInfo.pass);
-			 	   con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + "seachandcook", "root", "");
+				 con = DriverManager.getConnection(DbInfo.dbPath + DbInfo.dbName, DbInfo.user, DbInfo.pass);
 			 				 statm = con.createStatement();
 
 		 } catch (SQLException e) {
@@ -24,17 +22,5 @@ public class DbUtil {
 			}
 		return con;
 		
-	}
-	
-//	public static void getIngredients() throws SQLException {
-//		rs = statm.executeQuery("SELECT * FROM ingredients");
-//		
-//		while (rs.next()) {
-//			System.out.println(rs.getString("ingredient"));
-//		}
-//	}
-	
-	public void getList() {
-	
 	}
 }
