@@ -70,7 +70,7 @@ public class seachandcookGUI extends JFrame implements ActionListener{
 		setTitle("Seach and Cook!");
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 830, 571);
+		setBounds(100, 100, 840, 600);
 		setLocationRelativeTo(null);
 		
 		// Getting database connection
@@ -216,13 +216,17 @@ public class seachandcookGUI extends JFrame implements ActionListener{
 		contentPane.add(deleteButton);
 		deleteButton.setBackground(new Color(241, 57, 83));
 		deleteButton.addActionListener(e -> {
-			int selectedIndex = rightTable.getSelectedRow();
-			((DefaultTableModel)rightTable.getModel()).removeRow(selectedIndex);
+			try {
+				removeProduct();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		Button saveButton = new Button("Save");
 		saveButton.setForeground(Color.WHITE);
 		saveButton.addActionListener(e -> {
-			saveItemToDatabase();
+			
 		});
 		saveButton.setBackground(new Color(241, 57, 83));
 		saveButton.setBounds(412, 264, 80, 22);
@@ -248,8 +252,24 @@ public class seachandcookGUI extends JFrame implements ActionListener{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void saveItemToDatabase() {
-
+	public void removeProduct() throws SQLException {
+		if (rightTable.getSelectedRow() < 0) {
+			JOptionPane.showMessageDialog(this, "No item has been selected.", "Shoppinglist Error", JOptionPane.CLOSED_OPTION);
+			
+		} else {
+			int selectedIndex = rightTable.getSelectedRow();
+			String selectedItem = (String) ((DefaultTableModel)rightTable.getModel()).getValueAt(selectedIndex, 0);
+			System.out.println(selectedItem);
+			Integer productId = null;
+			rs = statm.executeQuery("SELECT id, ingredient FROM ingredients WHERE ingredient = '"+selectedItem+"'");
+			while (rs.next()) {
+				productId = rs.getInt("id");
+			}
+			System.out.println(productId);
+			System.out.println(currentListId);
+			statm.executeUpdate("DELETE FROM list_ingredient WHERE ingredient_id='"+productId+"' AND list_id='"+currentListId+"'");
+			((DefaultTableModel)rightTable.getModel()).removeRow(selectedIndex);
+		}
 	}
 	
 	//Selecting item from left table and adding it into right table
@@ -257,7 +277,6 @@ public class seachandcookGUI extends JFrame implements ActionListener{
 		// If no list is selected print error message, else add to database and right Table
 		if (currentListId == null) {
 			JOptionPane.showMessageDialog(this, "No list is selected.", "Shoppinglist Error", JOptionPane.CLOSED_OPTION);
-			
 		}
 		else {
 			int selectedIndex = leftTable.getSelectedRow();
