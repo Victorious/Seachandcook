@@ -3,16 +3,15 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Label;
-import java.awt.Menu;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -23,7 +22,6 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.sun.corba.se.pept.transport.ListenerThread;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -31,7 +29,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
-public class seachandcookGUI extends JFrame implements ActionListener {
+public class seachandcookGUI extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JTable leftTable;
@@ -39,7 +37,7 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 	Label productsLabel;
 	JMenuItem menuItemNew = null;
 	JMenu menuSelectList = null;
-	
+	Integer currentListId = null;
 	ResultSet rs;
 	Connection con;
 	Statement statm;
@@ -47,6 +45,7 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -59,12 +58,14 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
 	public seachandcookGUI() throws SQLException {
+		 
 		
 		setTitle("Seach and Cook!");
 		setBackground(Color.WHITE);
@@ -76,6 +77,7 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 		con = DbUtil.getDbConnection();
 		statm = con.createStatement();
 		
+
 		// Adding top menubar
 		JMenuBar topMenuBar = new JMenuBar();
 		setJMenuBar(topMenuBar);
@@ -139,11 +141,7 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 		panel.setLayout(null);
 
 		Button searchButton = new Button("Search");
-		searchButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-
-			}
+		searchButton.addActionListener(e -> {
 		});
 		searchButton.setForeground(Color.WHITE);
 		searchButton.setBackground(new Color(241, 57, 83));
@@ -164,23 +162,31 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 		Button addButton = new Button("Add");
 		addButton.setForeground(Color.WHITE);
 		addButton.addActionListener(e -> {
-
+			try {
+				addProductToShoppingList();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		addButton.setBackground(new Color(241, 57, 83));
 		addButton.setBounds(295, 465, 85, 22);
 		panel.add(addButton);
 		
 		JScrollPane scrollPaneLeft = new JScrollPane();
+		scrollPaneLeft.setToolTipText("");
 		scrollPaneLeft.setBounds(47, 156, 241, 331);
 		panel.add(scrollPaneLeft);
 		
 
 		leftTable = new JTable();
-		leftTable.setBackground(new Color(255, 255, 255));
-		leftTable.setForeground(new Color(0, 0, 0));
-		scrollPaneLeft.setViewportView(leftTable);
-
-		leftTable = new JTable();
+		leftTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Items"
+			}
+		));
 		leftTable.setBackground(new Color(255, 255, 255));
 		leftTable.setForeground(new Color(0, 0, 0));
 		scrollPaneLeft.setViewportView(leftTable);
@@ -189,6 +195,8 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 		lblNewLabel_1.setIcon(new ImageIcon(seachandcookGUI.class.getResource("/Shoop.jpg")));
 		lblNewLabel_1.setBounds(176, 14, 149, 105);
 		panel.add(lblNewLabel_1);
+		
+
 
 		productsLabel = new Label("Your shoppinglist: ");
 		productsLabel.setBounds(514, 87, 284, 45);
@@ -208,12 +216,13 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 		contentPane.add(deleteButton);
 		deleteButton.setBackground(new Color(241, 57, 83));
 		deleteButton.addActionListener(e -> {
-
+			int selectedIndex = rightTable.getSelectedRow();
+			((DefaultTableModel)rightTable.getModel()).removeRow(selectedIndex);
 		});
 		Button saveButton = new Button("Save");
 		saveButton.setForeground(Color.WHITE);
 		saveButton.addActionListener(e -> {
-	
+			saveItemToDatabase();
 		});
 		saveButton.setBackground(new Color(241, 57, 83));
 		saveButton.setBounds(412, 264, 80, 22);
@@ -235,29 +244,84 @@ public class seachandcookGUI extends JFrame implements ActionListener {
 		));
 		scrollPaneRight.setViewportView(rightTable);
 		
+		getProducts();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void saveItemToDatabase() {
+
+	}
+	
+	//Selecting item from left table and adding it into right table
+	public void addProductToShoppingList() throws SQLException {
+		// If no list is selected print error message, else add to database and right Table
+		if (currentListId == null) {
+			JOptionPane.showMessageDialog(this, "No list is selected.", "Shoppinglist Error", JOptionPane.CLOSED_OPTION);
+			
+		}
+		else {
+			int selectedIndex = leftTable.getSelectedRow();
+			String selectedItem = (String) ((DefaultTableModel)leftTable.getModel()).getValueAt(selectedIndex, 0);
+			String[] ItemToArray = {selectedItem};
+			Integer productId = null;
+			((DefaultTableModel)rightTable.getModel()).addRow(ItemToArray);	
+			rs = statm.executeQuery("SELECT id, ingredient FROM ingredients WHERE ingredient = '"+selectedItem+"'");
+			while (rs.next()) {
+				productId = rs.getInt("id");
+			}
+			
+			statm.executeUpdate("INSERT INTO list_ingredient (ingredient_id, list_id) VALUES('"+productId+"','"+currentListId+"')");
+			
+		}
+
+	}
+	
+	//Adding products into left Table
+	public void getProducts() throws SQLException {
+		String getSql = "select * from ingredients"; 
+		rs = statm.executeQuery(getSql);
+		((DefaultTableModel)leftTable.getModel()).setNumRows(0);
+		while (rs.next()) {			
+			int numcols = leftTable.getModel().getColumnCount();
+			Object [] fill = new Object[numcols];
+			String product_item = rs.getString(3);
+			fill[0] = product_item;
+			((DefaultTableModel)leftTable.getModel()).addRow(fill);
+		}
 	}
 
+	// Targeting the selected Shoppinglist and adding it into Right Table
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String listString = e.getActionCommand();
+		// Getting Shopping list from database and all items in that list
 		productsLabel.setText("Your shoppinglist: " + listString);
-		String sqlString = "SELECT shopping_list.id, title, ingredients.id, ingredients.ingredient "
+		String sqlString = "SELECT shopping_list.id, title, ingredients.id, ingredients.ingredient, list_ingredient.quantity "
 				+ "FROM shopping_list, list_ingredient, ingredients "
 				+ "WHERE title = '"+listString+"' "
 				+ "AND shopping_list.id = list_ingredient.list_id "
 				+ "AND list_ingredient.ingredient_id = ingredients.id ";
 		try {
 			rs = statm.executeQuery(sqlString);
-			 
+			((DefaultTableModel)rightTable.getModel()).setNumRows(0);
 			while (rs.next()) {
+//				Adding Shoppinglist into right table
 				int numcols = rightTable.getModel().getColumnCount();
 				Object [] fill = new Object[numcols];
 				int product_quantity = rs.getInt("list_ingredient.quantity");
 				String product_item = rs.getString("ingredients.ingredient");
 				fill[0] = product_item;
 				fill[1] = product_quantity;
-				((DefaultTableModel)rightTable.getModel()).addRow(fill);
+				((DefaultTableModel)rightTable.getModel()).addRow(fill);		
 			}
+			
+			String sqlListId = "SELECT id FROM shopping_list WHERE title = '"+listString+"'";
+			rs = statm.executeQuery(sqlListId);
+			while (rs.next()) {
+				currentListId = rs.getInt("id");
+			}
+			
+			
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
