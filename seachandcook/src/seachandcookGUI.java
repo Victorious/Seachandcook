@@ -139,14 +139,75 @@ public class seachandcookGUI extends JFrame implements ActionListener{
 		panel.setBackground(new Color(255, 255, 255));
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
+		TextField searchtextField = new TextField();
+		searchtextField.setBounds(176, 125, 113, 22);
+		panel.add(searchtextField);
 
 		Button searchButton = new Button("Search");
 		searchButton.addActionListener(e -> {
+
+			
+				String getSql = "select * from ingredients where ingredient='"+searchtextField.getText()+"'"; 
+				try {
+					rs = statm.executeQuery(getSql);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				((DefaultTableModel)leftTable.getModel()).setNumRows(0);
+				try {
+					while (rs.next()) {			
+						int numcols = leftTable.getModel().getColumnCount();
+						Object [] fill = new Object[numcols];
+						String product_item = rs.getString(3);
+						fill[0] = product_item;
+						((DefaultTableModel)leftTable.getModel()).addRow(fill);
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+			
 		});
 		searchButton.setForeground(Color.WHITE);
 		searchButton.setBackground(new Color(241, 57, 83));
 		searchButton.setBounds(295, 125, 85, 22);
 		panel.add(searchButton);
+		
+		Button searchButton2 = new Button("See all products");
+		searchButton2.addActionListener(e -> {
+
+			searchtextField.setText("");
+			
+				String getSql = "select * from ingredients"; 
+				try {
+					rs = statm.executeQuery(getSql);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				((DefaultTableModel)leftTable.getModel()).setNumRows(0);
+				try {
+					while (rs.next()) {			
+						int numcols = leftTable.getModel().getColumnCount();
+						Object [] fill = new Object[numcols];
+						String product_item = rs.getString(3);
+						fill[0] = product_item;
+						((DefaultTableModel)leftTable.getModel()).addRow(fill);
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+			
+		});
+		searchButton2.setForeground(Color.WHITE);
+		searchButton2.setBackground(new Color(241, 57, 83));
+		searchButton2.setBounds(290, 150, 95, 22);
+		panel.add(searchButton2);
 
 		Label seachlabel = new Label("Enter product name :");
 		seachlabel.setBackground(new Color(255, 255, 255));
@@ -154,10 +215,6 @@ public class seachandcookGUI extends JFrame implements ActionListener{
 		seachlabel.setForeground(new Color(0, 0, 0));
 		seachlabel.setBounds(47, 125, 123, 22);
 		panel.add(seachlabel);
-
-		TextField searchtextField = new TextField();
-		searchtextField.setBounds(176, 125, 113, 22);
-		panel.add(searchtextField);
 
 		Button addButton = new Button("Add");
 		addButton.setForeground(Color.WHITE);
